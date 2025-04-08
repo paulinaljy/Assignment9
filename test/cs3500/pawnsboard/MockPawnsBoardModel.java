@@ -59,8 +59,8 @@ public class MockPawnsBoardModel implements QueensBlood {
       for (int c = 0; c < this.width; c++) {
         row.add(new EmptyCell());
       }
-      row.set(0, new Pawns(Color.red));
-      row.set(this.width - 1, new Pawns(Color.blue));
+      row.set(0, new Pawns(Color.red, 1));
+      row.set(this.width - 1, new Pawns(Color.blue, 1));
     }
     return board;
   }
@@ -123,7 +123,7 @@ public class MockPawnsBoardModel implements QueensBlood {
    * @param currentPlayer the current player of the game
    */
   private void applyInfluenceCells(GameCard card, int row, int col, Player currentPlayer) {
-    List<Position> influencedCells = card.getPositions();
+    List<Position> influencedCells = card.getInfluencedPositions();
     for (int i = 0; i < influencedCells.size(); i++) {
       // get affected positions
       int rowPosition = influencedCells.get(i).getRowDelta() + row;

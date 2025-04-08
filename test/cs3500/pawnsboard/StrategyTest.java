@@ -12,6 +12,7 @@ import cs3500.pawnsboard.controller.DeckConfiguration;
 import cs3500.pawnsboard.controller.PawnsBoardDeckConfig;
 import cs3500.pawnsboard.controller.PawnsBoardPlayerController;
 import cs3500.pawnsboard.model.GameCard;
+import cs3500.pawnsboard.model.InfluencePosition;
 import cs3500.pawnsboard.model.ModelActions;
 import cs3500.pawnsboard.model.PawnsBoardModel;
 import cs3500.pawnsboard.model.Position;
@@ -56,58 +57,58 @@ public class StrategyTest {
 
   @Before
   public void setup() {
-    Position leftSecurity = new Position(0, -1); // (2,1)
-    Position rightSecurity = new Position(0, 1); // (2,3)
-    Position topSecurity = new Position(-1, 0); // (1,2)
-    Position bottomSecurity = new Position(1, 0); // (3,2)
+    Position leftSecurity = new InfluencePosition(0, -1); // (2,1)
+    Position rightSecurity = new InfluencePosition(0, 1); // (2,3)
+    Position topSecurity = new InfluencePosition(-1, 0); // (1,2)
+    Position bottomSecurity = new InfluencePosition(1, 0); // (3,2)
     ArrayList<Position> securityInfluenceGrid = new ArrayList<Position>(Arrays.asList(topSecurity,
             leftSecurity, rightSecurity, bottomSecurity));
 
-    Position topMandragora = new Position(-1, 0); // (1,2)
-    Position right1Mandragora = new Position(0, 1); // (2,3)
-    Position right2Mandragora = new Position(0, 2); // (2,4)
+    Position topMandragora = new InfluencePosition(-1, 0); // (1,2)
+    Position right1Mandragora = new InfluencePosition(0, 1); // (2,3)
+    Position right2Mandragora = new InfluencePosition(0, 2); // (2,4)
     ArrayList<Position> mandragoraInfluenceGrid = new ArrayList<Position>(Arrays.asList(
             topMandragora, right1Mandragora, right2Mandragora));
 
-    Position topBee = new Position(-2, 0);
-    Position bottomBee = new Position(2, 0);
+    Position topBee = new InfluencePosition(-2, 0);
+    Position bottomBee = new InfluencePosition(2, 0);
     ArrayList<Position> beeInfluenceGrid = new ArrayList<Position>(Arrays.asList(
             topBee, bottomBee));
 
-    Position top1Sweeper = new Position(-1, -1);
-    Position top2Sweeper = new Position(-1, 0);
-    Position bottom1Sweeper = new Position(1, -1);
-    Position bottom2Sweeper = new Position(1, 0);
+    Position top1Sweeper = new InfluencePosition(-1, -1);
+    Position top2Sweeper = new InfluencePosition(-1, 0);
+    Position bottom1Sweeper = new InfluencePosition(1, -1);
+    Position bottom2Sweeper = new InfluencePosition(1, 0);
     ArrayList<Position> sweeperInfluenceGrid = new ArrayList<Position>(Arrays.asList(
             top1Sweeper, top2Sweeper, bottom1Sweeper, bottom2Sweeper));
 
-    Position leftCrab = new Position(0, -1); // (2,1)
-    Position rightCrab = new Position(0, 1); // (2,3)
-    Position topCrab = new Position(-1, 0); // (1,2)
+    Position leftCrab = new InfluencePosition(0, -1); // (2,1)
+    Position rightCrab = new InfluencePosition(0, 1); // (2,3)
+    Position topCrab = new InfluencePosition(-1, 0); // (1,2)
     ArrayList<Position> crabInfluenceGrid = new ArrayList<Position>(
             Arrays.asList(topCrab, leftCrab, rightCrab));
 
-    Position topQueen = new Position(-2, 0); // (0,2)
+    Position topQueen = new InfluencePosition(-2, 0); // (0,2)
     ArrayList<Position> queenInfluenceGrid = new ArrayList<Position>(Arrays.asList(topQueen));
 
-    Position top1Trooper = new Position(-2, 0);
-    Position top2Trooper = new Position(-1, 1);
-    Position rightTrooper = new Position(0, 1);
-    Position bottom1Trooper = new Position(1, 0);
-    Position bottom2Trooper = new Position(2, 0);
+    Position top1Trooper = new InfluencePosition(-2, 0);
+    Position top2Trooper = new InfluencePosition(-1, 1);
+    Position rightTrooper = new InfluencePosition(0, 1);
+    Position bottom1Trooper = new InfluencePosition(1, 0);
+    Position bottom2Trooper = new InfluencePosition(2, 0);
     ArrayList<Position> trooperInfluenceGrid = new ArrayList<Position>(Arrays.asList(
             top1Trooper, top2Trooper, rightTrooper, bottom1Trooper, bottom2Trooper));
 
-    Position topCaveStalker = new Position(-2, 0);
-    Position right1CaveStalker = new Position(-1, 1);
-    Position right2CaveStalker = new Position(0, 1);
-    Position right3CaveStalker = new Position(1, 1);
-    Position bottomCaveStalker = new Position(2, 0);
+    Position topCaveStalker = new InfluencePosition(-2, 0);
+    Position right1CaveStalker = new InfluencePosition(-1, 1);
+    Position right2CaveStalker = new InfluencePosition(0, 1);
+    Position right3CaveStalker = new InfluencePosition(1, 1);
+    Position bottomCaveStalker = new InfluencePosition(2, 0);
     ArrayList<Position> cavestalkerInfluenceGrid = new ArrayList<Position>(Arrays.asList(
             topCaveStalker, right1CaveStalker, right2CaveStalker,
             right3CaveStalker, bottomCaveStalker));
 
-    Position leftLobber = new Position(0, -2);
+    Position leftLobber = new InfluencePosition(0, -2);
     ArrayList<Position> lobberInfluenceGrid = new ArrayList<Position>(Arrays.asList(leftLobber));
 
     security = new GameCard("Security", GameCard.Cost.ONE, 2,

@@ -28,7 +28,11 @@ public class GameCard implements Card {
   private final Cost cost;
   private final int valueScore;
   private final List<Position> influenceGrid;
+  private final List<Position> devalueGrid;
+  private final List<Position> upgradeGrid;
   private Color color;
+  private int futureValue;
+  private boolean removeCard;
 
   /**
    * Initializes a GameCard with a name, cost, value, and influence grid.
@@ -38,7 +42,8 @@ public class GameCard implements Card {
    * @param valueScore    value of the card
    * @param influenceGrid list of relative positions representing cells influenced
    */
-  public GameCard(String name, Cost cost, int valueScore, List<Position> influenceGrid) {
+  public GameCard(String name, Cost cost, int valueScore, List<Position> influenceGrid,
+                  List<Position> upgradeGrid, List<Position> devalueGrid) {
     if (valueScore <= 0) {
       throw new IllegalArgumentException("Value score of the card must be a positive integer");
     }
@@ -46,7 +51,11 @@ public class GameCard implements Card {
     this.cost = cost;
     this.valueScore = valueScore;
     this.influenceGrid = influenceGrid;
+    this.devalueGrid = devalueGrid;
+    this.upgradeGrid = upgradeGrid;
     this.color = Color.white;
+    this.futureValue = 0;
+    this.removeCard = true;
   }
 
   /**
@@ -84,6 +93,19 @@ public class GameCard implements Card {
 
   @Override
   public Cell influence(Player currentPlayer) {
+    this.removeCard = false;
+    return this;
+  }
+
+  @Override
+  public Cell upgrade() {
+    this.futureValue += 1;
+    return this;
+  }
+
+  @Override
+  public Cell devalue() {
+    this.futureValue -= 1;
     return this;
   }
 
@@ -94,7 +116,11 @@ public class GameCard implements Card {
 
   @Override
   public int getValue() {
-    return this.valueScore;
+    int totalValue = this.valueScore + this.futureValue;
+    if (totalValue < 0) {
+      this.removeCard = true;
+    }
+    return totalValue;
   }
 
   @Override
@@ -130,8 +156,18 @@ public class GameCard implements Card {
   }
 
   @Override
-  public List<Position> getPositions() {
+  public List<Position> getInfluencedPositions() {
     return this.influenceGrid;
+  }
+
+  @Override
+  public List<Position> getUpgradePositions() {
+    return this.upgradeGrid;
+  }
+
+  @Override
+  public List<Position> getDevaluePositions() {
+    return this.devalueGrid;
   }
 
   /**

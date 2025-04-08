@@ -31,7 +31,7 @@ import cs3500.pawnsboard.controller.DeckConfiguration;
  * This statement is also preserved by the method setNextPlayer() because it uses the modulo
  * operation (% 2) to ensure that turn always updates to 0 or 1.
  */
-public class PawnsBoardModel implements QueensBlood {
+public class EnhancedPawnsBoardModel implements QueensBlood {
   private final int width;
   private final int height;
   private final Player[] players;
@@ -53,7 +53,7 @@ public class PawnsBoardModel implements QueensBlood {
    * @param rand       random object
    * @param deckConfig deck configuration
    */
-  public PawnsBoardModel(int width, int height, Random rand, DeckConfiguration deckConfig) {
+  public EnhancedPawnsBoardModel(int width, int height, Random rand, DeckConfiguration deckConfig) {
     if (height < 0) {
       throw new IllegalArgumentException("invalid height");
     }
@@ -186,7 +186,7 @@ public class PawnsBoardModel implements QueensBlood {
     this.board.get(row).set(col, card); // set card at given row and column
     // sets the color of the card to the current player's color
     card.setColor(currentPlayer.getColor());
-    this.applyInfluenceCells(card, row, col, currentPlayer); // influence effect
+    this.applyInfluenceGrid(card, row, col, currentPlayer); // influence effect
     pass = 0; // sets pass to 0
     this.setNextPlayer();
   }
@@ -207,7 +207,7 @@ public class PawnsBoardModel implements QueensBlood {
    * @param col           the column position of the card placed by the player
    * @param currentPlayer the current player of the game
    */
-  private void applyInfluenceCells(GameCard card, int row, int col, Player currentPlayer) {
+  private void applyInfluenceGrid(GameCard card, int row, int col, Player currentPlayer) {
     List<Position> influencedCells = card.getInfluencedPositions();
     for (int i = 0; i < influencedCells.size(); i++) {
       // get affected positions
@@ -216,6 +216,26 @@ public class PawnsBoardModel implements QueensBlood {
       if (rowPosition >= 0 && rowPosition < this.height
               && colPosition >= 0 && colPosition < this.width) {
         this.influenceCellEffect(rowPosition, colPosition, currentPlayer);
+      }
+    }
+
+    List<Position> devalueCells = card.getDevaluePositions();
+    for (int i = 0; i < devalueCells.size(); i++) {
+      int rowPosition = devalueCells.get(i).getRowDelta() + row;
+      int colPosition = devalueCells.get(i).getColDelta() + col;
+      if (rowPosition >= 0 && rowPosition < this.height
+              && colPosition >= 0 && colPosition < this.width) {
+        this.devalueCellEffect(rowPosition, colPosition, currentPlayer);
+      }
+    }
+
+    List<Position> upgradeCells = card.getUpgradePositions();
+    for (int i = 0; i < upgradeCells.size(); i++) {
+      int rowPosition = upgradeCells.get(i).getRowDelta() + row;
+      int colPosition = upgradeCells.get(i).getColDelta() + col;
+      if (rowPosition >= 0 && rowPosition < this.height
+              && colPosition >= 0 && colPosition < this.width) {
+        this.upgradeCellEffect(rowPosition, colPosition);
       }
     }
   }
@@ -235,6 +255,35 @@ public class PawnsBoardModel implements QueensBlood {
     Cell influencedCell = this.getCellAt(row, col);
     Cell newCell = influencedCell.influence(currentPlayer);
     this.board.get(row).set(col, newCell);
+  }
+
+  /**
+   * Performs the upgrade influence of the card by adding to the future value of the cell by 1.
+   *
+   * @param row           the row position of the cell to influence
+   * @param col           the column position of the cell to influence
+   */
+  private void upgradeCellEffect(int row, int col) {
+    Cell influencedCell = this.getCellAt(row, col);
+    Cell newCell = influencedCell.upgrade();
+    this.board.get(row).set(col, newCell);
+  }
+
+  /**
+   * Performs the devalue influence of the card by decreasing the future value of the cell by 1.
+   *
+   * @param row           the row position of the cell to influence
+   * @param col           the column position of the cell to influence
+   */
+  private void devalueCellEffect(int row, int col, Player currentPlayer) {
+    Cell influencedCell = this.getCellAt(row, col);
+    Cell devaluedCell = influencedCell.devalue();
+    if (devaluedCell.isGameCard() && devaluedCell.getValue() < 0) { // cell that is influenced is game card + value < 0
+      Cell newCell = new Pawns(currentPlayer.getColor(), devaluedCell.getCost()); // pawns with count of cost of game card
+      this.board.get(row).set(col, newCell);
+    } else {
+      this.board.get(row).set(col, devaluedCell);
+    }
   }
 
   @Override

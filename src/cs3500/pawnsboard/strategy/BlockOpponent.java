@@ -70,7 +70,7 @@ public class BlockOpponent implements Strategy {
                                      int targetCol, Player player) {
     for (int h = 0; h < player.getHand().size(); h++) {
       GameCard card = player.getHand().get(h);
-      List<Position> influencedCells = card.getPositions();
+      List<Position> influencedCells = card.getInfluencedPositions();
       for (int row = 0; row < model.getHeight(); row++) {
         for (int col = 0; col < model.getWidth(); col++) {
           int newCol = col;

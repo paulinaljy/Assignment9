@@ -13,4 +13,16 @@ public interface Cell extends ReadOnlyCell {
    * @return new cell that is updated
    */
   Cell influence(Player currentPlayer);
+
+  /**
+   * Updates the cell based on the upgrade influence of the card.
+   * @return new cell that is updated
+   */
+  Cell upgrade();
+
+  /**
+   * Updates the cell based on the devalue influence of the card.
+   * @return new cell that is updated
+   */
+  Cell devalue();
 }

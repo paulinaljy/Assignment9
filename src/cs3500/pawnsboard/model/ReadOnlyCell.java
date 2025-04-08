@@ -1,6 +1,7 @@
 package cs3500.pawnsboard.model;
 
 import java.awt.Color;
+import java.util.List;
 
 import cs3500.pawnsboard.model.Cell;
 

@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+import cs3500.pawnsboard.model.DevaluePosition;
 import cs3500.pawnsboard.model.GameCard;
+import cs3500.pawnsboard.model.InfluencePosition;
 import cs3500.pawnsboard.model.Position;
+import cs3500.pawnsboard.model.UpgradePosition;
 
 /**
  * Represents a PawnsBoardDeckConfig that loads the deck configuration based on the given file
@@ -58,6 +61,8 @@ public class PawnsBoardDeckConfig implements DeckConfiguration {
       value = scan.nextInt();
     }
     ArrayList<Position> influences = new ArrayList<>();
+    ArrayList<Position> upgrades = new ArrayList<>();
+    ArrayList<Position> devalues = new ArrayList<>();
     for (int r = 0; r < 5 && scan.hasNext(); r++) {
       String row = scan.next();
       for (int i = 0; i < 5; i++) {
@@ -65,14 +70,26 @@ public class PawnsBoardDeckConfig implements DeckConfiguration {
         if (cell.equals('I')) {
           try {
             // relative reference position from card (2,2)
-            influences.add(new Position(r - 2, i - 2));
+            influences.add(new InfluencePosition(r - 2, i - 2));
+          } catch (IndexOutOfBoundsException ignored) {
+
+          }
+        } else if (cell.equals('U')) {
+          try {
+            upgrades.add(new UpgradePosition(r - 2, i - 2));
+          } catch (IndexOutOfBoundsException ignored) {
+
+          }
+        } else if (cell.equals('D')) {
+          try {
+            devalues.add(new DevaluePosition(r - 2, i - 2));
           } catch (IndexOutOfBoundsException ignored) {
 
           }
         }
       }
     }
-    return new GameCard(name, GameCard.valueToCost(cost), value, influences);
+    return new GameCard(name, GameCard.valueToCost(cost), value, influences, upgrades, devalues);
   }
 }
 

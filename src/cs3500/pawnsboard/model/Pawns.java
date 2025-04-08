@@ -1,6 +1,8 @@
 package cs3500.pawnsboard.model;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -10,14 +12,16 @@ import java.util.Objects;
 public class Pawns implements Cell {
   private Color color;
   private int count;
+  private int futureValue;
 
   /**
    * Initializes the Pawns with a color and count of 1.
    * @param color the color of the pawn
    */
-  public Pawns(Color color) {
+  public Pawns(Color color, int count) {
     this.color = color;
-    this.count = 1;
+    this.count = this.count;
+    this.futureValue = 0;
   }
 
   @Override
@@ -53,6 +57,18 @@ public class Pawns implements Cell {
     } else { // if cell is other player => update color to current player color
       this.color = currentPlayer.getColor();
     }
+    return this;
+  }
+
+  @Override
+  public Cell upgrade() {
+    this.futureValue += 1;
+    return this;
+  }
+
+  @Override
+  public Cell devalue() {
+    this.futureValue -= 1;
     return this;
   }
 

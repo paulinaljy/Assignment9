@@ -18,11 +18,25 @@ public interface ReadOnlyGameCard extends ReadOnlyCell {
   boolean isCellInfluencedAt(int row, int col);
 
   /**
-   * Returns the list of positions of the influence grid in this game card.
+   * Returns the list of positions of the influence cells of the influence grid in this game card.
    *
    * @return list of positions
    */
-  List<Position> getPositions();
+  List<Position> getInfluencedPositions();
+
+  /**
+   * Returns the list of positions of the upgrade cells of the influence grid in this game card.
+   *
+   * @return list of positions
+   */
+  List<Position> getUpgradePositions();
+
+  /**
+   * Returns the list of positions of the devalue cells of the influence grid in this game card.
+   *
+   * @return list of positions
+   */
+  List<Position> getDevaluePositions();
 
 
   /**

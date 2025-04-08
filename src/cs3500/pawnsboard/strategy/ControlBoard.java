@@ -51,7 +51,7 @@ public class ControlBoard implements Strategy {
             continue; // move on to next card in hand
           }
 
-          List<Position> influencedCells = card.getPositions();
+          List<Position> influencedCells = card.getInfluencedPositions();
           int netCount = getNetCount(model, influencedCells, row, newCol, player);
           if (netCount > maxCount) {
             maxCount = netCount; // replaces max net count with current net count

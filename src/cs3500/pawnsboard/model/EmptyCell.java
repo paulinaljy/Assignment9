@@ -1,6 +1,8 @@
 package cs3500.pawnsboard.model;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -8,6 +10,11 @@ import java.util.Objects;
  * if influenced.
  */
 public class EmptyCell implements Cell {
+  private int futureValue;
+
+  public EmptyCell() {
+    this.futureValue = 0;
+  }
 
   @Override
   public int getCost() {
@@ -36,7 +43,19 @@ public class EmptyCell implements Cell {
    */
   @Override
   public Cell influence(Player currentPlayer) {
-    return new Pawns(currentPlayer.getColor());
+    return new Pawns(currentPlayer.getColor(), 1);
+  }
+
+  @Override
+  public Cell upgrade() {
+    this.futureValue += 1;
+    return this;
+  }
+
+  @Override
+  public Cell devalue() {
+    this.futureValue -= 1;
+    return this;
   }
 
   @Override
