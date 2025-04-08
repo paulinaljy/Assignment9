@@ -19,7 +19,6 @@ import cs3500.pawnsboard.model.ReadonlyPawnsBoardModel;
  */
 public class PlayersHandPanel extends JPanel implements IntPlayersHandPanel {
 
-  private GameCardPanel selectedCard;
   private List<GameCardPanel> playersHand;
   private final ReadonlyPawnsBoardModel pawnsBoardModel;
   private final int playerID;
@@ -40,7 +39,6 @@ public class PlayersHandPanel extends JPanel implements IntPlayersHandPanel {
     }
 
     this.pawnsBoardModel = pawnsBoardModel;
-    this.selectedCard = null;
 
     setLayout(new GridLayout(1, 1));
     createHand();
@@ -100,13 +98,13 @@ public class PlayersHandPanel extends JPanel implements IntPlayersHandPanel {
     }
   }
 
-  /**
-   * Returns the selected card in this player's hand.
-   * @return GameCardButton that is currently selected
-   */
-  @Override
-  public GameCardPanel getSelectedCard() {
-    return selectedCard;
+  public void setSelectedHand() {
+    int cardIdxSelected = observer.getSelectedCard();
+    if (cardIdxSelected != -1) {
+      System.out.println("reset hand");
+      GameCardPanel cardSelected = this.playersHand.get(cardIdxSelected);
+      cardSelected.setLocation(cardSelected.getX(), cardSelected.getY() - 20);
+    }
   }
 
   /**
@@ -151,24 +149,41 @@ public class PlayersHandPanel extends JPanel implements IntPlayersHandPanel {
       if (pawnsBoardModel.isGameOver() || !observer.isViewEnabled()) {
         return;
       }
-      if (selectedCard == card) { // if selected card that is already selected
+      int cardIdxSelected = -1;
+      if (observer != null) {
+        cardIdxSelected = observer.getSelectedCard();
+      }
+
+      System.out.println("card id: " + cardIdxSelected);
+      GameCardPanel selectedCard = null;
+      if (cardIdxSelected != -1) {
+        selectedCard = playersHand.get(cardIdxSelected);
+      }
+
+      if (selectedCard == card) { // if selected card is already selected
         // moves card down
-        selectedCard.setLocation(selectedCard.getX(), selectedCard.getY() + 10);
+        selectedCard.setBorder(BorderFactory.createLineBorder(getBackground(), 0));
+        //selectedCard.setLocation(selectedCard.getX(), selectedCard.getY() - 10);
         selectedCard = null; // deselect card
       } else {
         if (selectedCard != null) { // if a card is already selected + select different card
           // move originally selected card down
-          selectedCard.setLocation(selectedCard.getX(), selectedCard.getY() + 10);
+          selectedCard.setBorder(BorderFactory.createLineBorder(getBackground(), 0));
+          //selectedCard.setLocation(selectedCard.getX(), selectedCard.getY() - 10);
         }
 
         selectedCard = card; // set selected card to current card
         // move current card up
-        selectedCard.setLocation(selectedCard.getX(), selectedCard.getY() - 10);
+        selectedCard.setBorder(BorderFactory.createLineBorder(Color.white, 5));
+        //selectedCard.setLocation(selectedCard.getX(), selectedCard.getY() + 10);
       }
 
       if (selectedCard != null) {
         observer.setCardIdx(selectedCard.getIndexID());
+      } else {
+        observer.setCardIdx(-1);
       }
+      System.out.println("after clicked: " + observer.getSelectedCard());
       getTopLevelAncestor().requestFocus();
     }
   }

@@ -22,6 +22,7 @@ public class PawnsBoardPlayerController implements PawnsBoardController, ViewAct
   private int cardIdxSelected;
   private Point cellSelected;
   private boolean viewEnabled;
+  private boolean highContrastMode;
 
   /**
    * Constructs a GUI controller for the game.
@@ -48,6 +49,7 @@ public class PawnsBoardPlayerController implements PawnsBoardController, ViewAct
     this.player = player;
     this.cellSelected = null;
     this.cardIdxSelected = -1;
+    this.highContrastMode = false;
   }
 
   @Override
@@ -135,6 +137,31 @@ public class PawnsBoardPlayerController implements PawnsBoardController, ViewAct
   @Override
   public boolean isViewEnabled() {
     return viewEnabled;
+  }
+
+  @Override
+  public void setBoardMode() {
+    if (!this.highContrastMode) {
+      this.highContrastMode = true;
+      view.displayHighContrastBoard(this);
+    } else {
+      this.highContrastMode = false;
+      view.displayNormalBoard(this);
+    }
+  }
+
+  @Override
+  public Point getSelectedCell() {
+    if (this.cellSelected != null) {
+      return new Point((int)this.cellSelected.getX(), (int)this.cellSelected.getY());
+    } else {
+      return null;
+    }
+  }
+
+  @Override
+  public int getSelectedCard() {
+    return this.cardIdxSelected;
   }
 
   @Override

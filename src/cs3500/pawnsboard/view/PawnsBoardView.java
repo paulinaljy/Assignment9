@@ -38,5 +38,15 @@ public interface PawnsBoardView {
    * view game board.
    */
   void displayGameOver();
+
+  /**
+   * Displays the game board in high contrast mode.
+   */
+  void displayHighContrastBoard(ViewActions observer);
+
+  /**
+   * Displays the game board with normal colors.
+   */
+  void displayNormalBoard(ViewActions observer);
 }
 

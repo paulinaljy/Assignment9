@@ -1,5 +1,7 @@
 package cs3500.pawnsboard.view;
 
+import java.awt.*;
+
 /**
  * Represents a ViewActions interface that make up the game play actions of the game, including
  * placing a card, quitting, passing, setting a card index, setting a selected cell, and checking
@@ -35,6 +37,15 @@ public interface ViewActions {
    * @return boolean whether the view should be playable
    */
   boolean isViewEnabled();
+
+  /**
+   * Sets the board to be either normal or high contrast mode.
+   */
+  void setBoardMode();
+
+  Point getSelectedCell();
+
+  int getSelectedCard();
 
 }
 

@@ -17,8 +17,9 @@ import cs3500.pawnsboard.model.ReadonlyPawnsBoardModel;
  */
 public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
   private final ReadonlyPawnsBoardModel pawnsBoardModel;
-  private final PawnsBoardPanel boardPanel;
+  private AbstractPawnsBoardPanel boardPanel;
   private final PlayersHandPanel playersHandPanel;
+  private JPanel panel;
 
   /**
    * Initializes a PawnsBoardFrame with a read only pawns board model and player ID.
@@ -33,7 +34,7 @@ public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     boardPanel = new PawnsBoardPanel(pawnsBoardModel);
     playersHandPanel = new PlayersHandPanel(pawnsBoardModel, playerID);
-    JPanel panel = new JPanel();
+    this.panel = new JPanel();
     panel.setLayout(new GridLayout(2, 1));
     panel.add(boardPanel);
     panel.add(playersHandPanel);
@@ -79,6 +80,11 @@ public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
             observer.pass();
             break;
 
+          case KeyEvent.VK_M:
+            System.out.println("m");
+            observer.setBoardMode();
+            break;
+
           default:
             break;
         }
@@ -111,6 +117,30 @@ public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
     JFrame gameOverFrame = new GameOverFrame(pawnsBoardModel);
     gameOverFrame.setVisible(true);
     gameOverFrame.setFocusable(true);
+  }
+
+  @Override
+  public void displayHighContrastBoard(ViewActions observer) {
+    AbstractPawnsBoardPanel newBoard = new HighContrastBoardPanel(pawnsBoardModel);
+    panel.remove(0);
+    panel.add(newBoard, 0);
+    newBoard.subscribe(observer);
+    this.boardPanel = newBoard;
+    this.boardPanel.revalidate();
+    this.boardPanel.repaint();
+    this.playersHandPanel.setSelectedHand();
+  }
+
+  @Override
+  public void displayNormalBoard(ViewActions observer) {
+    AbstractPawnsBoardPanel newBoard = new PawnsBoardPanel(pawnsBoardModel);
+    panel.remove(0);
+    panel.add(newBoard, 0);
+    newBoard.subscribe(observer);
+    this.boardPanel = newBoard;
+    this.boardPanel.revalidate();
+    this.boardPanel.repaint();
+    this.playersHandPanel.setSelectedHand();
   }
 }
 
