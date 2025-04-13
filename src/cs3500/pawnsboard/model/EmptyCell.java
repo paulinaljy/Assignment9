@@ -94,4 +94,7 @@ public class EmptyCell implements Cell {
   public int hashCode() {
     return Objects.hash();
   }
+
+  @Override
+  public int getFutureValue() { return this.futureValue; }
 }

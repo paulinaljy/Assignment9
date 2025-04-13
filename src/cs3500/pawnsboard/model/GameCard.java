@@ -204,4 +204,7 @@ public class GameCard implements Card {
   public int hashCode() {
     return Objects.hash(name);
   }
+
+  @Override
+  public int getFutureValue() { return this.futureValue; }
 }

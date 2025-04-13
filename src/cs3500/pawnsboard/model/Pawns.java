@@ -111,4 +111,7 @@ public class Pawns implements Cell {
   public int hashCode() {
     return Objects.hash(color);
   }
+
+  @Override
+  public int getFutureValue() { return this.futureValue; }
 }

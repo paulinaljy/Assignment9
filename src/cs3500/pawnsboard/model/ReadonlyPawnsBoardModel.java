@@ -3,6 +3,7 @@ package cs3500.pawnsboard.model;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents the immutable behaviors of the pawns board game, including getting the current player,
@@ -139,4 +140,5 @@ public interface ReadonlyPawnsBoardModel {
    * @return the Player associated with the color
    */
   Player getPlayerByColor(Color color);
+
 }

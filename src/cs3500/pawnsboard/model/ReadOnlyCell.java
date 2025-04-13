@@ -62,4 +62,12 @@ public interface ReadOnlyCell {
    * @return the cell
    */
   Cell getCell();
+
+  /**
+   * Needed for EnhancedPawnsBoard.
+   *
+   * @return future value
+   */
+  int getFutureValue();
+
 }

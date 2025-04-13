@@ -69,4 +69,6 @@ public interface QueensBlood extends ReadonlyPawnsBoardModel {
    * @param observer observer
    */
   void subscribe(ModelActions observer, int playerID);
+
+
 }

@@ -2,7 +2,9 @@ package cs3500.pawnsboard.model;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import cs3500.pawnsboard.controller.DeckConfiguration;
