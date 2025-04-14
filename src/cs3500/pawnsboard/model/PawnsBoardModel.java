@@ -169,6 +169,18 @@ public class PawnsBoardModel implements QueensBlood {
     }
   }
 
+  /**
+   * Returns whether the card and cell selected by the player is valid to play, that is the card
+   * is not out of bounds of the player's hand, cell is not out of bounds of board, and player has
+   * and owns pawns to cover the cost of the card.
+   * @param cardIdx index of card selected (0-index based)
+   * @param row row of cell selected (0-index based)
+   * @param col col of cell selected (0-index based)
+   * @param currentPlayer current player of the game
+   * @return boolean of whether the card and cell selected is valid
+   * @throws IllegalArgumentException if card index, row, or col is out of bounds, there are no
+   * pawns on the cell, the player does not own the pawns or cannot cover the cost of the card
+   */
   protected boolean isValidCardPlacement(int cardIdx, int row, int col, Player currentPlayer) {
     this.isGameStarted();
 

@@ -83,6 +83,10 @@ public class GameCardPanel extends JPanel {
           cell.setBackground(Color.orange);
         } else if (card.isCellInfluencedAt(row, col)) {
           cell.setBackground(Color.CYAN);
+        } else if (card.isCellUpgradedAt(row, col)) {
+          cell.setBackground(Color.MAGENTA);
+        } else if (card.isCellDevaluedAt(row, col)) {
+          cell.setBackground(Color.green);
         } else {
           cell.setBackground(Color.DARK_GRAY);
         }

@@ -183,6 +183,30 @@ public class GameCard implements Card {
   }
 
   @Override
+  public boolean isCellDevaluedAt(int row, int col) {
+    for (int i = 0; i < devalueGrid.size(); i++) {
+      int rowPosition = devalueGrid.get(i).getRowDelta() + 2;
+      int colPosition = devalueGrid.get(i).getColDelta() + 2;
+      if (rowPosition == row && colPosition == col) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public boolean isCellUpgradedAt(int row, int col) {
+    for (int i = 0; i < upgradeGrid.size(); i++) {
+      int rowPosition = upgradeGrid.get(i).getRowDelta() + 2;
+      int colPosition = upgradeGrid.get(i).getColDelta() + 2;
+      if (rowPosition == row && colPosition == col) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Override
   public void setColor(Color playersColor) {
     this.color = playersColor;
   }

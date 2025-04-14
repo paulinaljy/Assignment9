@@ -17,7 +17,7 @@ import cs3500.pawnsboard.model.ReadonlyPawnsBoardModel;
  */
 public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
   private final ReadonlyPawnsBoardModel pawnsBoardModel;
-  private AbstractPawnsBoardPanel boardPanel;
+  private PawnsBoardPanel boardPanel;
   private final PlayersHandPanel playersHandPanel;
   private JPanel panel;
 
@@ -32,7 +32,7 @@ public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
     setSize((pawnsBoardModel.getWidth() + 2) * 100,
             (pawnsBoardModel.getHeight() + 2) * 100);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
-    boardPanel = new PawnsBoardPanel(pawnsBoardModel);
+    boardPanel = new EnhancedBoardPanel(pawnsBoardModel);
     playersHandPanel = new PlayersHandPanel(pawnsBoardModel, playerID);
     this.panel = new JPanel();
     panel.setLayout(new GridLayout(2, 1));
@@ -103,11 +103,6 @@ public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
   }
 
   @Override
-  public void reset() {
-    boardPanel.reset();
-  }
-
-  @Override
   public void displayMessage(String message, String title) {
     JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
   }
@@ -121,7 +116,7 @@ public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
 
   @Override
   public void displayHighContrastBoard(ViewActions observer) {
-    AbstractPawnsBoardPanel newBoard = new HighContrastBoardPanel(pawnsBoardModel);
+    PawnsBoardPanel newBoard = new HighContrastBoardPanel(pawnsBoardModel);
     panel.remove(0);
     panel.add(newBoard, 0);
     newBoard.subscribe(observer);
@@ -133,7 +128,7 @@ public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
 
   @Override
   public void displayNormalBoard(ViewActions observer) {
-    AbstractPawnsBoardPanel newBoard = new PawnsBoardPanel(pawnsBoardModel);
+    PawnsBoardPanel newBoard = new PawnsBoardPanel(pawnsBoardModel);
     panel.remove(0);
     panel.add(newBoard, 0);
     newBoard.subscribe(observer);

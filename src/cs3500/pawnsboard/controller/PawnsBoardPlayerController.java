@@ -95,7 +95,6 @@ public class PawnsBoardPlayerController implements PawnsBoardController, ViewAct
       model.placeCardInPosition(originalCardSelected, (int)originalCellSelected.getX(),
               (int)originalCellSelected.getY());
       view.refresh();
-      view.reset();
     } catch (IllegalArgumentException | IllegalStateException e) {
       cardIdxSelected = originalCardSelected;
       cellSelected = originalCellSelected;
@@ -113,7 +112,6 @@ public class PawnsBoardPlayerController implements PawnsBoardController, ViewAct
       model.pass();
       cardIdxSelected = -1;
       cellSelected = null;
-      view.reset();
       viewEnabled = false;
     } catch (IllegalStateException e) {
       view.displayMessage(e.getMessage(), "Game Not Started");

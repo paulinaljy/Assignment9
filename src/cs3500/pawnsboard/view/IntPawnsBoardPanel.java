@@ -14,9 +14,4 @@ public interface IntPawnsBoardPanel extends GamePanel {
    * @return a point (row,col)
    */
   Point getSelectedBoardCell();
-
-  /**
-   * Resets the selected cell to be deselected (null).
-   */
-  void reset();
 }
