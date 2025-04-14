@@ -34,18 +34,18 @@ import cs3500.pawnsboard.controller.DeckConfiguration;
  * operation (% 2) to ensure that turn always updates to 0 or 1.
  */
 public class PawnsBoardModel implements QueensBlood {
-  private final int width;
-  private final int height;
-  private final Player[] players;
-  private final List<ArrayList<Cell>> board;
-  private int turn;
-  private int pass;
-  private boolean gameStarted;
-  private final Random rand;
-  private int p1TotalScore;
-  private int p2TotalScore;
-  private ModelActions observer1;
-  private ModelActions observer2;
+  protected final int width;
+  protected final int height;
+  protected final Player[] players;
+  protected final List<ArrayList<Cell>> board;
+  protected int turn;
+  protected int pass;
+  protected boolean gameStarted;
+  protected final Random rand;
+  protected int p1TotalScore;
+  protected int p2TotalScore;
+  protected ModelActions observer1;
+  protected ModelActions observer2;
 
   /**
    * Initializes a PawnsBoardModel with width, height, and random object.
@@ -128,8 +128,8 @@ public class PawnsBoardModel implements QueensBlood {
       for (int c = 0; c < this.width; c++) {
         row.add(new EmptyCell());
       }
-      row.set(0, new Pawns(Color.red, 1));
-      row.set(this.width - 1, new Pawns(Color.blue, 1));
+      row.set(0, new Pawns(Color.red, 1, 0));
+      row.set(this.width - 1, new Pawns(Color.blue, 1, 0));
     }
     return board;
   }
@@ -157,8 +157,20 @@ public class PawnsBoardModel implements QueensBlood {
 
   @Override
   public void placeCardInPosition(int cardIdx, int row, int col) {
-    this.isGameStarted();
     Player currentPlayer = this.getCurrentPlayer();
+    if (this.isValidCardPlacement(cardIdx, row, col, currentPlayer)) {
+      GameCard card = currentPlayer.removeCard(cardIdx); // removes card from player's hand
+      this.board.get(row).set(col, card); // set card at given row and column
+      // sets the color of the card to the current player's color
+      card.setColor(currentPlayer.getColor());
+      this.applyInfluenceCells(card, row, col, currentPlayer); // influence effect
+      pass = 0; // sets pass to 0
+      this.setNextPlayer();
+    }
+  }
+
+  protected boolean isValidCardPlacement(int cardIdx, int row, int col, Player currentPlayer) {
+    this.isGameStarted();
 
     if (cardIdx < 0 || cardIdx >= currentPlayer.getHandSize()) {
       throw new IllegalArgumentException("Selected card index is out of bounds. ");
@@ -183,14 +195,7 @@ public class PawnsBoardModel implements QueensBlood {
       throw new IllegalStateException("You do not have enough pawns to cover the cost of this " +
               "card. ");
     }
-
-    GameCard card = currentPlayer.removeCard(cardIdx); // removes card from player's hand
-    this.board.get(row).set(col, card); // set card at given row and column
-    // sets the color of the card to the current player's color
-    card.setColor(currentPlayer.getColor());
-    this.applyInfluenceCells(card, row, col, currentPlayer); // influence effect
-    pass = 0; // sets pass to 0
-    this.setNextPlayer();
+    return true;
   }
 
   /**
@@ -209,7 +214,7 @@ public class PawnsBoardModel implements QueensBlood {
    * @param col           the column position of the card placed by the player
    * @param currentPlayer the current player of the game
    */
-  private void applyInfluenceCells(GameCard card, int row, int col, Player currentPlayer) {
+  protected void applyInfluenceCells(GameCard card, int row, int col, Player currentPlayer) {
     List<Position> influencedCells = card.getInfluencedPositions();
     for (int i = 0; i < influencedCells.size(); i++) {
       // get affected positions
@@ -235,7 +240,7 @@ public class PawnsBoardModel implements QueensBlood {
    */
   private void influenceCellEffect(int row, int col, Player currentPlayer) {
     Cell influencedCell = this.getCellAt(row, col);
-    Cell newCell = influencedCell.influence(currentPlayer);
+    Cell newCell = influencedCell.influence(currentPlayer, 0);
     this.board.get(row).set(col, newCell);
   }
 

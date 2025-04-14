@@ -67,8 +67,7 @@ public interface QueensBlood extends ReadonlyPawnsBoardModel {
    * Adds the observer to any listeners so actions on the view are
    * delegated to the observer.
    * @param observer observer
+   * @param playerID corresponding player ID
    */
   void subscribe(ModelActions observer, int playerID);
-
-
 }

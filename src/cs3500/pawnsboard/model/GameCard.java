@@ -1,6 +1,7 @@
 package cs3500.pawnsboard.model;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,6 +42,9 @@ public class GameCard implements Card {
    * @param cost          cost of the card
    * @param valueScore    value of the card
    * @param influenceGrid list of relative positions representing cells influenced
+   * @param upgradeGrid list of relative positions representing cells that are upgraded
+   * @param devalueGrid list of relative positions representing cells that are devalued
+   *
    */
   public GameCard(String name, Cost cost, int valueScore, List<Position> influenceGrid,
                   List<Position> upgradeGrid, List<Position> devalueGrid) {
@@ -56,6 +60,29 @@ public class GameCard implements Card {
     this.color = Color.white;
     this.futureValue = 0;
     this.removeCard = true;
+  }
+
+  /**
+   * Initializes a GameCard with a name, cost, value, and influence grid.
+   *
+   * @param name          name of the card
+   * @param cost          cost of the card
+   * @param valueScore    value of the card
+   * @param influenceGrid list of relative positions representing cells influenced
+   */
+  public GameCard(String name, Cost cost, int valueScore, List<Position> influenceGrid) {
+    if (valueScore <= 0) {
+      throw new IllegalArgumentException("Value score of the card must be a positive integer");
+    }
+    this.name = name;
+    this.cost = cost;
+    this.valueScore = valueScore;
+    this.influenceGrid = influenceGrid;
+    this.color = Color.white;
+    this.futureValue = 0;
+    this.removeCard = true;
+    this.devalueGrid = new ArrayList<Position>();
+    this.upgradeGrid = new ArrayList<Position>();
   }
 
   /**
@@ -92,7 +119,8 @@ public class GameCard implements Card {
   }
 
   @Override
-  public Cell influence(Player currentPlayer) {
+  public Cell influence(Player currentPlayer, int futureValue) {
+    this.futureValue = futureValue;
     this.removeCard = false;
     return this;
   }
@@ -153,6 +181,11 @@ public class GameCard implements Card {
   @Override
   public void setColor(Color playersColor) {
     this.color = playersColor;
+  }
+
+  @Override
+  public void setFutureValue(int futureValue) {
+    this.futureValue = futureValue;
   }
 
   @Override

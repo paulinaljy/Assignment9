@@ -61,6 +61,16 @@ public class MockPawnsBoardView implements PawnsBoardView, QueensBloodTextualVie
   }
 
   @Override
+  public void displayHighContrastBoard(ViewActions observer) {
+
+  }
+
+  @Override
+  public void displayNormalBoard(ViewActions observer) {
+
+  }
+
+  @Override
   public String toString() {
     String board = "";
     int p1;

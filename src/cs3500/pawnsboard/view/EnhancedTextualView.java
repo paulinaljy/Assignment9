@@ -5,10 +5,10 @@ import java.io.IOException;
 import cs3500.pawnsboard.model.QueensBlood;
 import cs3500.pawnsboard.model.ReadOnlyCell;
 
-public class NewTextualView implements QueensBloodTextualView {
+public class EnhancedTextualView implements QueensBloodTextualView {
   private final QueensBlood model;
 
-  public NewTextualView(QueensBlood model) {
+  public EnhancedTextualView(QueensBlood model) {
     this.model = model;
   }
 
@@ -27,11 +27,13 @@ public class NewTextualView implements QueensBloodTextualView {
         ReadOnlyCell cell = model.getCellAt(row, col);
         String strCell = cell.toString();
 
-        int delta = cell.getFutureValue() - cell.getValue();
-        if (delta > 0) {
-          strCell += "(+" + delta + ")";
-        } else if (delta < 0) {
-          strCell += "(" + delta + ")";
+        int futureValue = cell.getFutureValue();
+        if (futureValue > 0) {
+          strCell += "(+" + futureValue + ")";
+        } else if (futureValue < 0) {
+          strCell += "(" + futureValue + ")";
+        } else {
+          strCell += "(+0)";
         }
 
         board += strCell + " ";
