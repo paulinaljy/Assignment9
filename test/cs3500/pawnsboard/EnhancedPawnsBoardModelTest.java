@@ -12,13 +12,10 @@ import cs3500.pawnsboard.controller.DeckConfiguration;
 import cs3500.pawnsboard.controller.PawnsBoardDeckConfig;
 import cs3500.pawnsboard.controller.PawnsBoardPlayerController;
 import cs3500.pawnsboard.model.DevaluePosition;
-import cs3500.pawnsboard.model.EmptyCell;
 import cs3500.pawnsboard.model.EnhancedPawnsBoardModel;
 import cs3500.pawnsboard.model.GameCard;
 import cs3500.pawnsboard.model.InfluencePosition;
 import cs3500.pawnsboard.model.ModelActions;
-import cs3500.pawnsboard.model.Pawns;
-import cs3500.pawnsboard.model.PawnsBoardModel;
 import cs3500.pawnsboard.model.Player;
 import cs3500.pawnsboard.model.Position;
 import cs3500.pawnsboard.model.QueensBlood;
@@ -41,15 +38,13 @@ public class EnhancedPawnsBoardModelTest {
   private Position bottom3Security;
   private ArrayList<Position> securityInfluenceGrid;
   private ArrayList<Position> securityUpgradeGrid;
-  private EmptyCell emptyCell;
-  private Pawns redPawns;
-  private Pawns bluePawns;
   private GameCard security;
   private GameCard bee;
   private GameCard sweeper;
   private GameCard crab;
   private GameCard queen;
-  private GameCard mandragora;
+  private GameCard mandragora1;
+  private GameCard mandragora2;
   private GameCard trooper;
   private GameCard cavestalker;
   private GameCard lobber;
@@ -154,10 +149,6 @@ public class EnhancedPawnsBoardModelTest {
     Position rightLobber = new InfluencePosition(0, 2);
     ArrayList<Position> lobberInfluenceGrid = new ArrayList<Position>(Arrays.asList(rightLobber));
 
-    emptyCell = new EmptyCell();
-    redPawns = new Pawns(Color.red);
-    bluePawns = new Pawns(Color.blue);
-
     security = new GameCard("Security", GameCard.Cost.ONE, 1,
             securityInfluenceGrid, securityUpgradeGrid, new ArrayList<Position>());
     bee = new GameCard("Bee", GameCard.Cost.ONE, 1, beeInfluenceGrid,
@@ -168,19 +159,21 @@ public class EnhancedPawnsBoardModelTest {
             crabUpgradeGrid, crabDevalueGrid);
     queen = new GameCard("Queen", GameCard.Cost.ONE, 1, queenInfluenceGrid,
             queenUpgradeGrid, queenDevalueGrid);
-    mandragora = new GameCard("Mandragora", GameCard.Cost.ONE, 1,
+    mandragora1 = new GameCard("Mandragora", GameCard.Cost.ONE, 1,
+            mandragoraInfluenceGrid, mandragoraUpgradeGrid, mandragoraDevalueGrid);
+    mandragora2 = new GameCard("Mandragora", GameCard.Cost.ONE, 1,
             mandragoraInfluenceGrid, mandragoraUpgradeGrid, mandragoraDevalueGrid);
     trooper = new GameCard("Trooper", GameCard.Cost.TWO, 3, trooperInfluenceGrid);
     cavestalker = new GameCard("Cavestalker", GameCard.Cost.THREE, 4,
             cavestalkerInfluenceGrid, cavestalkerUpgradeGrid, new ArrayList<Position>());
     lobber = new GameCard("Lobber", GameCard.Cost.TWO, 1, lobberInfluenceGrid);
 
-    p1Deck = new ArrayList<GameCard>(Arrays.asList(security, bee, sweeper, crab, mandragora, queen,
-            trooper, cavestalker, lobber, security, bee, sweeper, crab, mandragora, queen, trooper,
+    p1Deck = new ArrayList<GameCard>(Arrays.asList(security, bee, sweeper, crab, mandragora1, queen,
+            trooper, cavestalker, lobber, security, bee, sweeper, crab, mandragora1, queen, trooper,
             cavestalker, lobber));
 
-    p2Deck = new ArrayList<GameCard>(Arrays.asList(security, bee, sweeper, crab, mandragora, queen,
-            trooper, cavestalker, lobber, security, bee, sweeper, crab, mandragora, queen,
+    p2Deck = new ArrayList<GameCard>(Arrays.asList(security, bee, sweeper, crab, mandragora2, queen,
+            trooper, cavestalker, lobber, security, bee, sweeper, crab, mandragora2, queen,
             trooper, cavestalker, lobber));
 
     deckConfig = new PawnsBoardDeckConfig();
@@ -228,7 +221,9 @@ public class EnhancedPawnsBoardModelTest {
     assertEquals(newP1Expected1, view.toString());
   }
 
-  // test effect of placing a game card on a cell with a future value
+  // test effect of placing a game card on a cell with a future value and score
+  // (1) => card value with -1 => removed and replaced with pawn with cost of card + influence still in effect
+  // (2) => future value is added to score once card is placed
   @Test
   public void testTextualViewPlaceCardScoreEffect() {
     game1.startGame(p1Deck, p2Deck, 5, false);
@@ -266,9 +261,41 @@ public class EnhancedPawnsBoardModelTest {
     assertEquals(newExpected1, view.toString());
   }
 
+  // (1) test upgrade/devalue of empty cell has no effect on owner of cell
+  // (2) => once claimed (influence cell) => enhances/devalues player who claimed
   @Test
   public void testTextualViewUpgradeDevalueOpponentCells() {
+    game1.startGame(p1Deck, p2Deck, 5, false);
+    game1.subscribe(observer1, 1);
+    game1.subscribe(observer2, 2);
+    QueensBloodTextualView view = new EnhancedTextualView(game1);
+    game1.placeCardInPosition(3, 1, 0); // player 1 placed crab
+    String expected =
+            "0 2(+0) _(+0) _(+0) _(+0) 1(+0) 0\n"
+                    + "1 R(+0) 1(+0) _(-1) _(+0) 1(+0) 0\n" // devalued cell (1,2): (-1)
+                    + "0 1(+1) _(+0) _(+0) _(+0) 1(+0) 0\n";
+    assertEquals(expected, view.toString());
 
+    game1.placeCardInPosition(4, 1, 4); // player 2 placed mandragora
+    String newExpected =
+            "0 2(+0) _(+0) _(+0) _(+0) 2(+0) 0\n"
+                    + "1 R(+0) 1(+0) _(+0) _(+1) B(+0) 1\n" // upgraded cell (1,2): (-1 + 1 = 0)
+                    + "0 1(+1) _(+0) _(+0) _(+0) 1(+0) 0\n";
+    assertEquals(newExpected, view.toString());
+
+    game1.placeCardInPosition(3, 1, 1); // player 1 placed mandragora
+    String newExpected1 =
+            "0 2(+0) 1(+0) _(+0) _(+0) 2(+0) 0\n"
+                    + "2 R(+0) R(+0) 1(+0) 1(+1) B(+0) 1\n" // cell (1,2) pawns owned by red
+                    + "0 1(+1) _(+0) _(+0) _(+0) 1(+0) 0\n";
+    assertEquals(newExpected1, view.toString());
+
+    game1.pass();
+    game1.placeCardInPosition(0, 1, 3); // player 1 placed security
+    String newExpected2 =
+            "0 2(+0) 1(+0) _(+0) 1(+0) 2(+0) 0\n"
+                    + "4 R(+0) R(+0) 2(+0) R(+1) B(+0) 1\n" // cell (1,2) card owned by red with enhanced value
+                    + "0 1(+1) _(+0) _(+1) 1(+0) 1(+1) 0\n";
+    assertEquals(newExpected2, view.toString());
   }
-
 }

@@ -240,7 +240,7 @@ public class PawnsBoardModel implements QueensBlood {
    */
   private void influenceCellEffect(int row, int col, Player currentPlayer) {
     Cell influencedCell = this.getCellAt(row, col);
-    Cell newCell = influencedCell.influence(currentPlayer, 0);
+    Cell newCell = influencedCell.influence(currentPlayer, influencedCell.getFutureValue());
     this.board.get(row).set(col, newCell);
   }
 

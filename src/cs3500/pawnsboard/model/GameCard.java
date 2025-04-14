@@ -127,13 +127,17 @@ public class GameCard implements Card {
 
   @Override
   public Cell upgrade() {
-    this.futureValue += 1;
+    if (this.color.equals(Color.white)) { // card not owned
+      this.futureValue += 1;
+    }
     return this;
   }
 
   @Override
   public Cell devalue() {
-    this.futureValue -= 1;
+    if (this.color.equals(Color.white)) { // card not owned
+      this.futureValue -= 1;
+    }
     return this;
   }
 

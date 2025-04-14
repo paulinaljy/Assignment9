@@ -1,15 +1,13 @@
 package cs3500.pawnsboard.view;
 
-import java.io.IOException;
 
 import cs3500.pawnsboard.model.QueensBlood;
 import cs3500.pawnsboard.model.ReadOnlyCell;
 
-public class EnhancedTextualView implements QueensBloodTextualView {
-  private final QueensBlood model;
+public class EnhancedTextualView extends PawnsBoardTextualView {
 
   public EnhancedTextualView(QueensBlood model) {
-    this.model = model;
+    super(model);
   }
 
   @Override
@@ -43,11 +41,5 @@ public class EnhancedTextualView implements QueensBloodTextualView {
     }
 
     return board;
-  }
-
-
-  @Override
-  public void render(Appendable append) throws IOException {
-    append.append(this.toString());
   }
 }

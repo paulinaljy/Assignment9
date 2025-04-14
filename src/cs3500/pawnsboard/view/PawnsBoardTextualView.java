@@ -9,7 +9,7 @@ import cs3500.pawnsboard.model.ReadOnlyCell;
  * Represents a PawnsBoardTextualView that prints out a textual representation of the game board.
  */
 public class PawnsBoardTextualView implements QueensBloodTextualView {
-  private final QueensBlood model;
+  protected final QueensBlood model;
 
   /**
    * Initializes a PawnsBoardTextualView with a model.
