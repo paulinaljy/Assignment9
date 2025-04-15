@@ -49,6 +49,6 @@ public class PawnsBoardBuilder {
   }
 
   public QueensBlood build() {
-    return new PawnsBoardModel(width, height, new Random(), new PawnsBoardDeckConfig());
+    return new EnhancedPawnsBoardModel(width, height, new Random(), new PawnsBoardDeckConfig());
   }
 }

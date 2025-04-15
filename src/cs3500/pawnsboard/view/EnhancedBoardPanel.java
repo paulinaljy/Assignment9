@@ -40,18 +40,16 @@ public class EnhancedBoardPanel extends PawnsBoardPanel {
     g2d.setColor(Color.DARK_GRAY);
 
     Font font = g2d.getFont();
-    Font smallerFont = font.deriveFont(font.getSize2D() - 5);
+    Font smallerFont = font.deriveFont(font.getSize2D() - 7);
     g2d.setFont(smallerFont);
 
     String stringValue = Integer.toString(value);
-    if (value < 0 ) {
-      stringValue = "-" + stringValue;
-    } else if (value > 0) {
+    if (value > 0) {
       stringValue = "+" + stringValue;
-    } else {
+    } else if (value == 0) {
       stringValue = "";
     }
-    g2d.drawString(stringValue, x + 6, y - 5);
+    g2d.drawString(stringValue, x + 4, y - 5);
 
     g2d.setFont(font);
   }
