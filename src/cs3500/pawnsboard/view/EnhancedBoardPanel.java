@@ -34,6 +34,14 @@ public class EnhancedBoardPanel extends PawnsBoardPanel {
     }
   }
 
+  /**
+   * Draws the future values of each cell on the board. Converts the given model coordinates to
+   * logical and then draws the given future value as a string based on that converted coordinates.
+   * @param g2d the Graphics2D object
+   * @param row row of the cell to be drawn in (0-index based)
+   * @param col col of the cell to be drawn in (0-index based)
+   * @param value future value of the cell
+   */
   private void drawFutureValue(Graphics2D g2d, int row, int col, int value) {
     AffineTransform modelToLogical = getTransformForModelToLogical();
     Point2D src = modelToLogical.transform(new Point(col, row), null); // starting point

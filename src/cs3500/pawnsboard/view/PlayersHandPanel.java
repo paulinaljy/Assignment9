@@ -165,7 +165,7 @@ public class PlayersHandPanel extends JPanel implements IntPlayersHandPanel {
 
         selectedCard = card; // set selected card to current card
         // move current card up
-        selectedCard.setBorder(BorderFactory.createLineBorder(Color.white, 5));
+        selectedCard.setBorder(BorderFactory.createLineBorder(Color.yellow, 5));
         //selectedCard.setLocation(selectedCard.getX(), selectedCard.getY() + 10);
       }
 

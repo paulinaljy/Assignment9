@@ -33,7 +33,6 @@ public class GameCard implements Card {
   private final List<Position> upgradeGrid;
   private Color color;
   private int futureValue;
-  private boolean removeCard;
 
   /**
    * Initializes a GameCard with a name, cost, value, and influence grid.
@@ -59,7 +58,6 @@ public class GameCard implements Card {
     this.upgradeGrid = upgradeGrid;
     this.color = Color.white;
     this.futureValue = 0;
-    this.removeCard = true;
   }
 
   /**
@@ -80,7 +78,6 @@ public class GameCard implements Card {
     this.influenceGrid = influenceGrid;
     this.color = Color.white;
     this.futureValue = 0;
-    this.removeCard = true;
     this.devalueGrid = new ArrayList<Position>();
     this.upgradeGrid = new ArrayList<Position>();
   }
@@ -121,7 +118,6 @@ public class GameCard implements Card {
   @Override
   public Cell influence(Player currentPlayer, int futureValue) {
     this.futureValue = futureValue;
-    this.removeCard = false;
     return this;
   }
 
@@ -148,11 +144,7 @@ public class GameCard implements Card {
 
   @Override
   public int getValue() {
-    int totalValue = this.valueScore + this.futureValue;
-    if (totalValue < 0) {
-      this.removeCard = true;
-    }
-    return totalValue;
+    return this.valueScore + this.futureValue;
   }
 
   @Override

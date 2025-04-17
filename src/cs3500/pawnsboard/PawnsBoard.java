@@ -9,9 +9,9 @@ import java.util.Random;
 import cs3500.pawnsboard.controller.DeckConfiguration;
 import cs3500.pawnsboard.model.GameCard;
 import cs3500.pawnsboard.controller.PawnsBoardDeckConfig;
-import cs3500.pawnsboard.model.PawnsBoardModel;
+import cs3500.pawnsboard.model.PawnsBoardModelTextual;
 import cs3500.pawnsboard.model.QueensBlood;
-import cs3500.pawnsboard.view.PawnsBoardTextualView;
+import cs3500.pawnsboard.view.EnhancedTextualView;
 import cs3500.pawnsboard.view.QueensBloodTextualView;
 
 /**
@@ -26,76 +26,22 @@ public class PawnsBoard {
    */
   public static void main(String[] args) throws IOException {
     DeckConfiguration deckConfig = new PawnsBoardDeckConfig();
-    QueensBlood model = new PawnsBoardModel(5, 3, new Random(), deckConfig);
-    QueensBloodTextualView view = new PawnsBoardTextualView(model);
+    QueensBlood model = new PawnsBoardModelTextual(5, 3, new Random(), deckConfig);
+    QueensBloodTextualView view = new EnhancedTextualView(model);
     Appendable gameLog = new StringBuffer();
     File file = null;
-    String path = "Assignment5" + File.separator + "docs" + File.separator + "deck.config";
+    String path = "docs" + File.separator + "enhancedGameDeck.config";
     File config = new File(path);
     List<GameCard> p1Deck = deckConfig.loadDeckConfig(new FileReader(config));
     List<GameCard> p2Deck = deckConfig.loadDeckConfig(new FileReader(config));
     model.startGame(p1Deck, p2Deck, 5, false);
 
-    model.drawNextCard();
     System.out.println("Current Player: " + model.getCurrentPlayer());
     System.out.println("Current Player Hand: " + model.getHand(model.getCurrentPlayerID()));
     model.placeCardInPosition(4, 1, 0); // player 1 placed mandragora
     view.render(gameLog);
 
-    model.drawNextCard();
     model.placeCardInPosition(0, 1, 4); // player 2 placed security
-    view.render(gameLog);
-
-    model.drawNextCard();
-    model.placeCardInPosition(0, 1, 2); // player 1 placed security
-    view.render(gameLog);
-
-    model.drawNextCard();
-    model.placeCardInPosition(2, 2, 4); // player 2 placed crab
-    view.render(gameLog);
-
-    model.drawNextCard();
-    model.placeCardInPosition(1, 1, 1); // player 1 placed sweeper
-    view.render(gameLog);
-
-    model.drawNextCard();
-    model.placeCardInPosition(5, 0, 4); // player 2 placed cavestalker
-    view.render(gameLog);
-
-    model.drawNextCard();
-    model.placeCardInPosition(5, 2, 0); // player 1 placed lobber
-    view.render(gameLog);
-
-    model.drawNextCard();
-    model.placeCardInPosition(0, 2, 3); // player 2 placed bee
-    view.render(gameLog);
-
-    model.drawNextCard();
-    model.placeCardInPosition(3, 2, 2); // player 1 placed trooper
-    view.render(gameLog);
-
-    model.drawNextCard();
-    model.placeCardInPosition(5, 0, 3); // player 2 placed security
-    view.render(gameLog);
-
-    model.drawNextCard();
-    model.placeCardInPosition(0, 2, 1); // player 1 placed bee
-    view.render(gameLog);
-
-    model.drawNextCard();
-    model.placeCardInPosition(3, 0, 2); // player 2 placed trooper
-    view.render(gameLog);
-
-    model.drawNextCard();
-    model.placeCardInPosition(2, 0, 0); // player 1 placed cavestalker
-    view.render(gameLog);
-
-    model.drawNextCard();
-    model.placeCardInPosition(1, 1, 3); // player 2 placed mandragora
-    view.render(gameLog);
-
-    model.drawNextCard();
-    model.placeCardInPosition(1, 0, 1); // player 1 placed queen
     view.render(gameLog);
 
     model.pass();

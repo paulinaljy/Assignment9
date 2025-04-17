@@ -136,6 +136,6 @@ public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
 
   @Override
   public void displayNormalBoard(ViewActions observer) {
-    this.setBoard(observer, new PawnsBoardPanel(pawnsBoardModel));
+    this.setBoard(observer, new EnhancedBoardPanel(pawnsBoardModel));
   }
 }
