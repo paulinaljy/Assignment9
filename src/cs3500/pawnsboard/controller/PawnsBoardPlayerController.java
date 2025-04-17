@@ -190,4 +190,3 @@ public class PawnsBoardPlayerController implements PawnsBoardController, ViewAct
     view.refresh();
   }
 }
-

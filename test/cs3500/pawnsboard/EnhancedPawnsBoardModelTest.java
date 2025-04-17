@@ -23,7 +23,6 @@ import cs3500.pawnsboard.model.UpgradePosition;
 import cs3500.pawnsboard.player.GamePlayer;
 import cs3500.pawnsboard.player.HumanPlayer;
 import cs3500.pawnsboard.view.EnhancedTextualView;
-import cs3500.pawnsboard.view.PawnsBoardTextualView;
 import cs3500.pawnsboard.view.PawnsBoardView;
 import cs3500.pawnsboard.view.QueensBloodTextualView;
 

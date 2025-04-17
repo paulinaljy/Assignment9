@@ -5,10 +5,15 @@ import java.util.Random;
 
 import cs3500.pawnsboard.controller.DeckConfiguration;
 
+/**
+ * Represents the model of a PawnsBoard game with the same behaviors of PawnsBoardModel and
+ * additional behaviors, including placing a card with an influence grid that devalues and upgrades
+ * cells on the game board.
+ */
 public class EnhancedPawnsBoardModel extends PawnsBoardModel {
 
   /**
-   * Initializes a PawnsBoardModel with width, height, and random object.
+   * Initializes an EnhancedPawnsBoardModel with width, height, and random object.
    *
    * @param width      the width of the board
    * @param height     the height of the board

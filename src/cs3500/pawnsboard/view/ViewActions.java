@@ -43,8 +43,16 @@ public interface ViewActions {
    */
   void setBoardMode();
 
+  /**
+   * Returns the selected cell on the game board.
+   * @return the selected board cell
+   */
   Point getSelectedCell();
 
+  /**
+   * Returns the selected card on the game board.
+   * @return the selected card
+   */
   int getSelectedCard();
 
 }

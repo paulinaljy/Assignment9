@@ -44,4 +44,3 @@ public interface PawnsBoardView {
    */
   void displayNormalBoard(ViewActions observer);
 }
-

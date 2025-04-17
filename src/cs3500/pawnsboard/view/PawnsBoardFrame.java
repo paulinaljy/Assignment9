@@ -114,28 +114,28 @@ public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
     gameOverFrame.setFocusable(true);
   }
 
-  @Override
-  public void displayHighContrastBoard(ViewActions observer) {
-    PawnsBoardPanel newBoard = new HighContrastBoardPanel(pawnsBoardModel);
+  /**
+   * Sets and updates the new board to this frame's board panel. Subscribes the new board to the
+   * observer.
+   * @param observer the observer
+   * @param board the new board
+   */
+  private void setBoard(ViewActions observer, PawnsBoardPanel board) {
     panel.remove(0);
-    panel.add(newBoard, 0);
-    newBoard.subscribe(observer);
-    this.boardPanel = newBoard;
+    panel.add(board, 0);
+    board.subscribe(observer);
+    this.boardPanel = board;
     this.boardPanel.revalidate();
     this.boardPanel.repaint();
-    this.playersHandPanel.setSelectedHand();
+  }
+
+  @Override
+  public void displayHighContrastBoard(ViewActions observer) {
+    this.setBoard(observer, new HighContrastBoardPanel(pawnsBoardModel));
   }
 
   @Override
   public void displayNormalBoard(ViewActions observer) {
-    PawnsBoardPanel newBoard = new PawnsBoardPanel(pawnsBoardModel);
-    panel.remove(0);
-    panel.add(newBoard, 0);
-    newBoard.subscribe(observer);
-    this.boardPanel = newBoard;
-    this.boardPanel.revalidate();
-    this.boardPanel.repaint();
-    this.playersHandPanel.setSelectedHand();
+    this.setBoard(observer, new PawnsBoardPanel(pawnsBoardModel));
   }
 }
-

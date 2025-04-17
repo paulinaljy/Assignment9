@@ -10,6 +10,11 @@ public class UpgradePosition implements Position {
   private final int rowDelta;
   private final int colDelta;
 
+  /**
+   * Initializes an UpgradePosition with a rowDelta and colDelta.
+   * @param rowDelta the horizontal distance from position (2,2)
+   * @param colDelta the vertical distance from position (2,2)
+   */
   public UpgradePosition(int rowDelta, int colDelta) {
     this.rowDelta = rowDelta;
     this.colDelta = colDelta;

@@ -1,3 +1,4 @@
+
 package cs3500.pawnsboard.view;
 
 import java.awt.*;
@@ -7,6 +8,10 @@ import java.awt.geom.Point2D;
 import cs3500.pawnsboard.model.ReadOnlyCell;
 import cs3500.pawnsboard.model.ReadonlyPawnsBoardModel;
 
+/**
+ * Represents an EnhancedBoardPanel that has behaviors, including drawing the upgrade and devalue
+ * influences of each cell in the game board.
+ */
 public class EnhancedBoardPanel extends PawnsBoardPanel {
   /**
    * Initializes an EnhancedPawnsBoardPanel with a read only pawns board model.

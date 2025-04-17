@@ -98,15 +98,6 @@ public class PlayersHandPanel extends JPanel implements IntPlayersHandPanel {
     }
   }
 
-  public void setSelectedHand() {
-    int cardIdxSelected = observer.getSelectedCard();
-    if (cardIdxSelected != -1) {
-      System.out.println("reset hand");
-      GameCardPanel cardSelected = this.playersHand.get(cardIdxSelected);
-      cardSelected.setLocation(cardSelected.getX(), cardSelected.getY() - 20);
-    }
-  }
-
   /**
    * Adds a new mouse listener with the given observer to each game card in this player's hand
    * panel.
