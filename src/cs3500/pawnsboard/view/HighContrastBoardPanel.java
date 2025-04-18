@@ -14,9 +14,9 @@ import cs3500.pawnsboard.model.ReadonlyPawnsBoardModel;
  * Represents a HighContrastPawnsBoardPanel that has behaviors, including drawing and updating the
  * game board (cells, game cards, pawns) in high contrast colors after clicked mouse events.
  */
-public class HighContrastBoardPanel extends AbstractPawnsBoardPanel {
+public class HighContrastBoardPanel extends PawnsBoardPanel {
   /**
-   * Initializes a PawnsBoardPanel with a read only pawns board model.
+   * Initializes a HighContrastBoardPanel with a read only pawns board model.
    *
    * @param model the model of the game
    */
@@ -24,8 +24,12 @@ public class HighContrastBoardPanel extends AbstractPawnsBoardPanel {
     super(model);
   }
 
+  /**
+   * Draws the high contrast board with white lines.
+   * @param g the <code>Graphics</code> object to protect
+   */
   @Override
-  protected void paintComponent(Graphics g) {
+  public void paintComponent(Graphics g) {
     super.paintComponent(g);
     Graphics2D g2d = (Graphics2D) g.create();
 

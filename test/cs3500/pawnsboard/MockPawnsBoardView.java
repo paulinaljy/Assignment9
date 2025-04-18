@@ -45,11 +45,6 @@ public class MockPawnsBoardView implements PawnsBoardView, QueensBloodTextualVie
   }
 
   @Override
-  public void reset() {
-    //empty
-  }
-
-  @Override
   public void displayMessage(String message, String title) {
     this.message = message;
     this.displayMessage = true;
@@ -89,5 +84,15 @@ public class MockPawnsBoardView implements PawnsBoardView, QueensBloodTextualVie
   @Override
   public void render(Appendable append) throws IOException {
     append.append(this.toString());
+  }
+
+  @Override
+  public void displayHighContrastBoard(ViewActions observer) {
+
+  }
+
+  @Override
+  public void displayNormalBoard(ViewActions observer) {
+
   }
 }

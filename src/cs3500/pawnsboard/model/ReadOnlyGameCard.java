@@ -18,6 +18,24 @@ public interface ReadOnlyGameCard extends ReadOnlyCell {
   boolean isCellInfluencedAt(int row, int col);
 
   /**
+   * Returns whether this cell is a devalued at the given row and col. A cell is devalued if
+   * its row position equals the given target row and col position equals the given target col.
+   * @param row the row of the cell (0-index)
+   * @param col the col of the cell (0-index)
+   * @return boolean whether the cell is devalued
+   */
+  boolean isCellDevaluedAt(int row, int col);
+
+  /**
+   * Returns whether this cell is a upgraded at the given row and col. A cell is upgraded if
+   * its row position equals the given target row and col position equals the given target col.
+   * @param row the row of the cell (0-index)
+   * @param col the col of the cell (0-index)
+   * @return boolean whether the cell is upgraded
+   */
+  boolean isCellUpgradedAt(int row, int col);
+
+  /**
    * Returns the list of positions of the influence cells of the influence grid in this game card.
    *
    * @return list of positions

@@ -42,8 +42,8 @@ public class EmptyCell implements Cell {
    * @return a new Pawns cell
    */
   @Override
-  public Cell influence(Player currentPlayer) {
-    return new Pawns(currentPlayer.getColor(), 1);
+  public Cell influence(Player currentPlayer, int futureValue) {
+    return new Pawns(currentPlayer.getColor(), 1, futureValue);
   }
 
   @Override

@@ -14,4 +14,10 @@ public interface Card extends Cell, ReadOnlyGameCard {
    */
   void setColor(Color playersColor);
 
+  /**
+   * Sets the future value of the card based on the given value.
+   * @param futureValue the future value of the card
+   */
+  void setFutureValue(int futureValue);
+
 }

@@ -8,18 +8,8 @@ import cs3500.pawnsboard.controller.PawnsBoardDeckConfig;
  * Represents a pawns board builder to build a pawns board game.
  */
 public class PawnsBoardBuilder {
-  private int width;
-  private int height;
-
-  /**
-   * Initializes a PawnsBoardBuilder with default width and height options.
-   * @param width width of the board
-   * @param height height of the board
-   */
-  public PawnsBoardBuilder(int width, int height) {
-    this.width = 5;
-    this.height = 3;
-  }
+  protected int width;
+  protected int height;
 
   /**
    * Initializes a PawnsBoardBuilder with no arguments.

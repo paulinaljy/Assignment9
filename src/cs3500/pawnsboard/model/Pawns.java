@@ -15,12 +15,23 @@ public class Pawns implements Cell {
   private int futureValue;
 
   /**
+   * Initializes the Pawns with a color and given count.
+   * @param color the color of the pawn
+   * @param count the count of the pawns
+   */
+  public Pawns(Color color, int count, int futureValue) {
+    this.color = color;
+    this.count = count;
+    this.futureValue = futureValue;
+  }
+
+  /**
    * Initializes the Pawns with a color and count of 1.
    * @param color the color of the pawn
    */
-  public Pawns(Color color, int count) {
+  public Pawns(Color color) {
     this.color = color;
-    this.count = this.count;
+    this.count = 1;
     this.futureValue = 0;
   }
 
@@ -51,7 +62,7 @@ public class Pawns implements Cell {
    * @return the updated pawn cell
    */
   @Override
-  public Cell influence(Player currentPlayer) {
+  public Cell influence(Player currentPlayer, int futureValue) {
     if (currentPlayer.getColor().equals(this.getOwnedColor()) && this.count < 3) {
       this.count += 1; // adds 1 to Pawns count
     } else { // if cell is other player => update color to current player color

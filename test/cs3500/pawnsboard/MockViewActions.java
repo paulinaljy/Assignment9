@@ -1,5 +1,7 @@
 package cs3500.pawnsboard;
 
+import java.awt.*;
+
 import cs3500.pawnsboard.view.ViewActions;
 
 /**
@@ -36,6 +38,21 @@ public class MockViewActions implements ViewActions {
   @Override
   public boolean isViewEnabled() {
     return true;
+  }
+
+  @Override
+  public void setBoardMode() {
+
+  }
+
+  @Override
+  public Point getSelectedCell() {
+    return null;
+  }
+
+  @Override
+  public int getSelectedCard() {
+    return 0;
   }
 
 }

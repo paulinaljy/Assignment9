@@ -17,7 +17,7 @@ import cs3500.pawnsboard.model.ReadonlyPawnsBoardModel;
  */
 public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
   private final ReadonlyPawnsBoardModel pawnsBoardModel;
-  private AbstractPawnsBoardPanel boardPanel;
+  private PawnsBoardPanel boardPanel;
   private final PlayersHandPanel playersHandPanel;
   private JPanel panel;
 
@@ -32,7 +32,7 @@ public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
     setSize((pawnsBoardModel.getWidth() + 2) * 100,
             (pawnsBoardModel.getHeight() + 2) * 100);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
-    boardPanel = new PawnsBoardPanel(pawnsBoardModel);
+    boardPanel = new EnhancedBoardPanel(pawnsBoardModel);
     playersHandPanel = new PlayersHandPanel(pawnsBoardModel, playerID);
     this.panel = new JPanel();
     panel.setLayout(new GridLayout(2, 1));
@@ -103,11 +103,6 @@ public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
   }
 
   @Override
-  public void reset() {
-    boardPanel.reset();
-  }
-
-  @Override
   public void displayMessage(String message, String title) {
     JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
   }
@@ -119,28 +114,28 @@ public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
     gameOverFrame.setFocusable(true);
   }
 
-  @Override
-  public void displayHighContrastBoard(ViewActions observer) {
-    AbstractPawnsBoardPanel newBoard = new HighContrastBoardPanel(pawnsBoardModel);
+  /**
+   * Sets and updates the new board to this frame's board panel. Subscribes the new board to the
+   * observer.
+   * @param observer the observer
+   * @param board the new board
+   */
+  private void setBoard(ViewActions observer, PawnsBoardPanel board) {
     panel.remove(0);
-    panel.add(newBoard, 0);
-    newBoard.subscribe(observer);
-    this.boardPanel = newBoard;
+    panel.add(board, 0);
+    board.subscribe(observer);
+    this.boardPanel = board;
     this.boardPanel.revalidate();
     this.boardPanel.repaint();
-    this.playersHandPanel.setSelectedHand();
+  }
+
+  @Override
+  public void displayHighContrastBoard(ViewActions observer) {
+    this.setBoard(observer, new HighContrastBoardPanel(pawnsBoardModel));
   }
 
   @Override
   public void displayNormalBoard(ViewActions observer) {
-    AbstractPawnsBoardPanel newBoard = new PawnsBoardPanel(pawnsBoardModel);
-    panel.remove(0);
-    panel.add(newBoard, 0);
-    newBoard.subscribe(observer);
-    this.boardPanel = newBoard;
-    this.boardPanel.revalidate();
-    this.boardPanel.repaint();
-    this.playersHandPanel.setSelectedHand();
+    this.setBoard(observer, new EnhancedBoardPanel(pawnsBoardModel));
   }
 }
-
