@@ -148,6 +148,7 @@ The PawnsBoardBuilder class can be found: src/cs3500/pawnsboard/model/PawnsBoard
 The PawnsBoard (textual view main method) can be found: src/cs3500/pawnsboard/PawnsBoard.java
 The PawnsBoardGame (GUI view main method) can be found: src/cs3500/pawnsboard/PawnsBoardGame.java
 
+--------------------------------------------------------------------------------------------------------
 CHANGES FROM ASSIGNMENT 5:
 In Model:
 - Refactored model interface by making original interface (QueensBlood) extend new model interface (ReadonlyPawnsBoardModel)
@@ -187,6 +188,7 @@ In Strategy:
 - Strategy implementation can be found: src/cs3500/pawnsboard/strategy 
 - Tests for strategies can be found: test/cs3500/pawnsboard/StrategyTest.java
 
+--------------------------------------------------------------------------------------------------------
 CHANGES FROM ASSIGNMENT 6:
 In View:
 - Added new behavior to ViewActions:
@@ -201,5 +203,67 @@ In Model:
   - itsYourTurn: notifies the player controller it's their turn and to choose a move 
   - refreshView: notifies the player controller to refresh their view 
   - processGameOver: notifies the player controller that the game is over
+
+--------------------------------------------------------------------------------------------------------
+CHANGES FROM ASSIGNMENT 7:
+For level 0 (in View):
+- Added new method setBoardMode in ViewActions interface
+  - To allow the observer (controller) when notified to set the board to either high contrast or normal mode
+- Added new key event to PawnsBoardFrame (pressing "h") to set board mode 
+- Added new methods displayHighContrastBoard and displayNormalBoard in PawnsBoardView interface
+  - To set and update the board panel and subscribe to the observer every time the key "h" is pressed
+- Created new class HighContrastBoardPanel that extends PawnsBoardPanel functionality
+  - Overrides methods like paintComponent, drawBoard, and subscribe
+  
+TO RUN LEVEL 0:
+- main method: PawnsBoardGame
+  - configuration: docs/gameDeck.config docs/gameDeck.config human human 5 7
+
+For level 1 (in Model):
+- Refactored Position class to be an interface with behaviors including getRowDelta and getColDelta
+  - Renamed previous Position class to be InfluencePosition that implements new Position interface
+    - Represents influenced cells in an influence grid of a game card
+- Created new class DevaluePosition that implements Position interface
+  - Represents devalued cells in an influence grid of a game card
+- Created new class UpgradePosition that implements Position interface
+  - Represents upgraded cells in an influence grid of a game card
+- Created new class EnhancedPawnsBoardModel that extends PawnsBoardModel functionality
+  - Overrides placeCardInPosition to implement the devalue and upgrade logic
+- Created new GameCard constructor that takes in a list of influenced cell, devalued cell, and upgraded cell positions
+
+For level 1 (in Controller):
+- Added logic in PawnsBoardDeckConfig to read devalue and upgrade positions and create new game cards
+
+For level 1 (in View):
+- Created new class EnhancedTextualView that extends PawnsBoardTextualView functionality
+  - Overrides toString method to add new textual view
+
+TO RUN LEVEL 1:
+- main method: EnhDevEmpty
+  - tests effect of enhancing and devaluing empty and pawns cells
+- main method: PlaceCardScoreEffect
+  - tests effect of placing a game card on a cell with a future value and score
+    - (1) => card value with -1 => removed and replaced with pawn with cost of card + influence still in effect
+    - (2) => future value is added to score once card is placed
+- main method: UpgrDevOppCells
+  - (1) tests upgrade/devalue of empty cell has no effect on owner of cell
+  - (2) => once claimed (influence cell) => enhances/devalues player who claimed
+
+For level 2 (in View):
+- Created new class EnhancedBoardPanel that extends BoardPanel functionality
+  - Overrides drawBoard method to draw the future values on the board
+- Added logic to GameCardPanel to draw game cards with upgrade (magenta) and devalue (green) cells
+
+For level 2 (in Model):
+- Created new class EnhancedPawnsBoardBuilder that extends PawnsBoardBuilder functionality
+  - Overrides build method to create new EnhancedPawnsBoardModel
+
+TO RUN LEVEL 2:
+- main method: EnhancedPawnsBoardGame
+  - human v. human configuration: docs/enhancedGameDeck.config docs/enhancedGameDeck.config human human 5 7
+  - human v. machine configuration: docs/enhancedGameDeck.config docs/enhancedGameDeck.config human strategy2 5 7
+  - machine v. machine configuration: docs/enhancedGameDeck.config docs/enhancedGameDeck.config strategy1 strategy2 5 7
+
+
 
 

@@ -4,6 +4,10 @@ package cs3500.pawnsboard.view;
 import cs3500.pawnsboard.model.QueensBlood;
 import cs3500.pawnsboard.model.ReadOnlyCell;
 
+/**
+ * Represents an EnhancedPawnsBoardTextualView that prints out a textual representation of the
+ * game board with future values of each cell.
+ */
 public class EnhancedTextualView extends PawnsBoardTextualView {
 
   public EnhancedTextualView(QueensBlood model) {

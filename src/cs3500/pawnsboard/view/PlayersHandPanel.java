@@ -174,7 +174,6 @@ public class PlayersHandPanel extends JPanel implements IntPlayersHandPanel {
       } else {
         observer.setCardIdx(-1);
       }
-      System.out.println("after clicked: " + observer.getSelectedCard());
       getTopLevelAncestor().requestFocus();
     }
   }

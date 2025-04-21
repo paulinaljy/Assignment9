@@ -60,10 +60,10 @@ public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
     this.playersHandPanel.subscribe(observer);
     this.addKeyListener(new KeyListener() {
       /**
-       * If the key "q" is pressed, notifies the observer (PawnsBoardPlayerController) to quit the
-       * game. If the enter key is pressed, notifies the observer (PawnsBoardPlayerController) to
+       * If the enter key is pressed, notifies the observer (PawnsBoardPlayerController) to
        * place the selected card in the selected board cell. If the space key is pressed, notifies
-       * the observer (PawnsBoardPlayerController) to pass.
+       * the observer (PawnsBoardPlayerController) to pass. If the "h" key is pressed, notifies the
+       * observer (PawnsBoardPlayerController) to turn on or off the high contrast mode.
        * @param e the event to be processed
        */
       @Override
@@ -80,8 +80,7 @@ public class PawnsBoardFrame extends JFrame implements PawnsBoardView {
             observer.pass();
             break;
 
-          case KeyEvent.VK_M:
-            System.out.println("m");
+          case KeyEvent.VK_H:
             observer.setBoardMode();
             break;
 

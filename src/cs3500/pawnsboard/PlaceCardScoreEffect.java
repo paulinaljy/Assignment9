@@ -13,6 +13,10 @@ import cs3500.pawnsboard.model.QueensBlood;
 import cs3500.pawnsboard.view.EnhancedTextualView;
 import cs3500.pawnsboard.view.QueensBloodTextualView;
 
+/**
+ * Represents a textual representation of a pawns board game that shows the effect of placing a
+ * game card on a cell with a future value and score.
+ */
 public class PlaceCardScoreEffect {
   public static void main(String[] args) throws IOException {
     DeckConfiguration deckConfig = new PawnsBoardDeckConfig();
@@ -26,18 +30,22 @@ public class PlaceCardScoreEffect {
     List<GameCard> p2Deck = deckConfig.loadDeckConfig(new FileReader(config));
     model.startGame(p1Deck, p2Deck, 5, false);
 
+    view.render(gameLog); // initial board
+
     model.placeCardInPosition(3, 1, 0); // Crab
     model.pass();
     model.placeCardInPosition(0, 1, 1); // Security
     model.pass();
     model.placeCardInPosition(0, 2, 1); // Bee
-    view.render(gameLog);
+    view.render(gameLog); // (1,2) negative future value, (2,0) +2 future value
+
     model.pass();
     model.placeCardInPosition(2, 1, 2); // Queen
-    view.render(gameLog);
+    view.render(gameLog); // card removed replaced with pawns with cost of card (1)
+
     model.pass();
     model.placeCardInPosition(1, 2, 0); // Mandragora
-    view.render(gameLog);
+    view.render(gameLog); // row 1 score = 1 (card value) + 2 (future value) = 3 + 1 = 4
     System.out.print(gameLog);
   }
 }

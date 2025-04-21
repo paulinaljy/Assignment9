@@ -13,7 +13,10 @@ import cs3500.pawnsboard.model.QueensBlood;
 import cs3500.pawnsboard.view.EnhancedTextualView;
 import cs3500.pawnsboard.view.QueensBloodTextualView;
 
-
+/**
+ * Represents a textual representation of a pawns board game that shows the effect of enhancing and
+ * devaluing empty and pawns cells.
+ */
 public class EnhDevEmpty {
   public static void main(String[] args) throws IOException {
 
@@ -28,10 +31,14 @@ public class EnhDevEmpty {
     List<GameCard> p2Deck = deckConfig.loadDeckConfig(new FileReader(config));
     model.startGame(p1Deck, p2Deck, 5, false);
 
-    model.placeCardInPosition(3, 1, 0);
+    view.render(gameLog); // initial board
+
+    model.placeCardInPosition(3, 1, 0); // player 1 placed crab
     view.render(gameLog);
+
     model.pass();
-    model.placeCardInPosition(0, 1, 1);
+
+    model.placeCardInPosition(0, 1, 1); // player 1 placed security
     view.render(gameLog);
     System.out.print(gameLog);
   }
